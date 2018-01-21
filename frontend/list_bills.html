@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fun with Forms in Vue.js</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.4/css/bulma.min.css">
-  <link rel="stylesheet" href="custom.css">
+    <title>Fun with Forms in Vue.js</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.4/css/bulma.min.css">
+    <link rel="stylesheet" href="custom.css">
 </head>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
@@ -11,275 +11,270 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <body>
-  <!-- Main container -->
-  <nav class="level">
-    <!-- Left side -->
-    <div class="level-left">
-      <div class="level-item">
-        <p class="subtitle is-5">
-          <strong>123</strong> bills
-        </p>
-      </div>
-      <div class="level-item">
-        <div class="field has-addons">
-          <p class="control">
-            <input class="input" type="text" placeholder="Find a post">
-          </p>
-          <p class="control">
-            <button class="button">
-              Search
-            </button>
-          </p>
+    <div class="wrapper">
+        <!-- Main container -->
+        <nav class="level">
+            <!-- Left side -->
+            <div class="level-left">
+                <div class="level-item">
+                    <p class="subtitle is-5">
+                        <strong>123</strong> bills
+                    </p>
+                </div>
+                <div class="level-item">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="text" placeholder="Find a post">
+                        </p>
+                        <p class="control">
+                            <button class="button">
+                                Search
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side -->
+            <div class="level-right">
+                <p class="level-item"><a href='list_bills.html'>List</a></p>
+                <div id='root'>
+                    <modal v-if='showModal' @close='showModal = false'>
+
+                        <label class='label' for="price">Price</label>
+                        <input class='input' v-model="price" placeholder="$$">
+
+
+                        <br>
+
+                        <div class="select">
+                            <label class='label' for="market">Market</label>
+                            <select v-model="selected_market">
+                                <option value="" disabled selected>Select your market</option>
+                                <option v-for="market in market_names" v-bind:value="market">
+                                    {{ market }}
+                                </option>
+                            </select>
+
+                            </select>
+
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+
+                        <label class='label' for="date">Date</label>
+                        <input v-model='date' type="date" name="date">
+                        <p>date: {{ date }}</p>
+                        <br>
+
+                        <label class='label' >
+                            <ul>
+                                <li v-for="member in flat_members">
+                                    <input type="checkbox" :value="member" id="member" v-model="selected_members">
+                                    <label>{{ member }}</label>
+                                </li>
+                            </ul>
+                            {{ selected_members }}
+                        </label>
+
+                        <div class="field">
+                            <label class="label">Description</label>
+                            <div class="control">
+                                <textarea v-model='description' class="textarea" placeholder="Dinner, Lunch.."></textarea>
+                            </div>
+                        </div>
+
+                    </modal>
+                    <button @click='showModal = true'> show modal </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- component template -->
+        <div class="column myclass">
+            <script type="text/x-template" id="grid-template">
+                <table>
+                    <thead>
+                    <tr>
+                        <th v-for="key in columns"
+                            @click="sortBy(key)"
+                            :class="{ active: sortKey == key }">
+                            {{ key | capitalize }}
+                            <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+                  </span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="entry in filteredData">
+                        <td v-for="key in columns">
+                            {{entry[key]}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </script>
+
+            <!-- demo root element -->
+            <div id="demo">
+                <form id="search">
+                    Search <input name="query" v-model="searchQuery">
+                </form>
+                <demo-grid
+                        :data="gridData"
+                        :columns="gridColumns"
+                        :filter-key="searchQuery">
+                </demo-grid>
+            </div>
+
+
+
+
         </div>
-      </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <p>
+                        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+                        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                    </p>
+                </div>
+            </div>
+        </footer>
     </div>
-
-    <!-- Right side -->
-    <div class="level-right">
-      <p class="level-item"><a href='list_bills.html'>List</a></p>
-      <div id='root'>
-       <modal v-if='showModal' @close='showModal = false'>
-
-         <label class='label' for="price">Price</label>
-         <input class='input' v-model="price" placeholder="$$">
-
-
-         <br>
-
-        <div class="select">
-         <label class='label' for="market">Market</label>
-         <select v-model="selected_market">
-           <option value="" disabled selected>Select your market</option>
-           <option v-for="market in market_names" v-bind:value="market">
-             {{ market }}
-           </option>
-         </select>
-
-        </select>
-
-        </div>
-        <br>
-        <br>
-        <br>
-
-        <label class='label' for="date">Date</label>
-        <input v-model='date' type="date" name="date">
-        <p>date: {{ date }}</p>
-        <br>
-
-        <label class='label' >
-          <ul>
-            <li v-for="member in flat_members">
-              <input type="checkbox" :value="member" id="member" v-model="selected_members">
-              <label>{{ member }}</label>
-            </li>
-          </ul>
-          {{ selected_members }}
-        </label>
-
-        <div class="field">
-        <label class="label">Description</label>
-        <div class="control">
-          <textarea v-model='description' class="textarea" placeholder="Dinner, Lunch.."></textarea>
-        </div>
-        </div>
-
-       </modal>
-       <button @click='showModal = true'> show modal </button>
-      </div>
-    </div>
-  </nav>
-
-
-
-<body>
-<!-- component template -->
-<div class=column>
-<script type="text/x-template" id="grid-template">
-  <table>
-    <thead>
-      <tr>
-        <th v-for="key in columns"
-          @click="sortBy(key)"
-          :class="{ active: sortKey == key }">
-          {{ key | capitalize }}
-          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="entry in filteredData">
-        <td v-for="key in columns">
-          {{entry[key]}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</script>
-
-<!-- demo root element -->
-<div id="demo">
-  <form id="search">
-    Search <input name="query" v-model="searchQuery">
-  </form>
-  <demo-grid
-    :data="gridData"
-    :columns="gridColumns"
-    :filter-key="searchQuery">
-  </demo-grid>
-</div>
-
-
-
-
-</div>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="content has-text-centered">
-        <p>
-          <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-          is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
-        </p>
-      </div>
-    </div>
-  </footer>
-
 </body>
 
 <script>
-
-
-Vue.component('modal', {
-  template: `
-  <div class="modal is-active">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Modal title</p>
-    </header>
-    <div class="modal-content">
-      <div class='box'>
-        <slot></slot>
-    <footer class="modal-card-foot">
-    <div class="field is-grouped">
-      <div class="control">
-        <button class="button is-link">Submit</button>
+    Vue.component('modal', {
+            template: `
+      <div class="modal is-active">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Modal title</p>
+        </header>
+        <div class="modal-content">
+          <div class='box'>
+            <slot></slot>
+        <footer class="modal-card-foot">
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-link">Submit</button>
+          </div>
+          <div class="control">
+            <button class="button is-text" @click="$emit('close')">Cancel</button>
+          </div>
+        </div>
+        </footer>
+        </b>
+        </div>
+        <button class="modal-close is-large" aria-label="close" @click="$emit('close')"></button>
+         </div>
       </div>
-      <div class="control">
-        <button class="button is-text" @click="$emit('close')">Cancel</button>
-      </div>
-    </div>
-    </footer>
-    </b>
-    </div>
-    <button class="modal-close is-large" aria-label="close" @click="$emit('close')"></button>
-     </div>
-  </div>
-  `
-})
+      `
+    });
 
 
-new Vue({
-  el: '#root',
-  data: {
-    showModal: false,
-    date: '',
-    price: '',
-    market_names: ['Aldi', 'Lidl'],
-    selected_market: '',
-    flat_members: ['John', 'Jeff', 'Marv', 'Frank'],
-    selected_members: [],
-    description: ''
+    new Vue({
+        el: '#root',
+        data: {
+            showModal: false,
+            date: '',
+            price: '',
+            market_names: ['Aldi', 'Lidl'],
+            selected_market: '',
+            flat_members: ['John', 'Jeff', 'Marv', 'Frank'],
+            selected_members: [],
+            description: ''
 
-  },
-  created: function () {
-    this.load_bills();
-  },
-  methods: {
-    load_bills: function () {
-      var vm = this;
-      this.form.status = 'Loading..';
-      axios.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')
-      .then(function (response) {
-        vm.form.status = response.data[0];
-        console.log(response.data)
-       })
-      .catch(function (error) {
-        vm.status = 'An error occured.' + error;
-      });
-    }}
-});
+        },
+        created: function () {
+            this.load_bills();
+        },
+        methods: {
+            load_bills: function () {
+                var vm = this;
+                this.form.status = 'Loading..';
+                axios.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')
+                    .then(function (response) {
+                        vm.form.status = response.data[0];
+                        console.log(response.data)
+                    })
+                    .catch(function (error) {
+                        vm.status = 'An error occured.' + error;
+                    });
+            }}
+    });
 
-// register the grid component
-Vue.component('demo-grid', {
-  template: '#grid-template',
-  props: {
-    data: Array,
-    columns: Array,
-    filterKey: String
-  },
-  data: function () {
-    var sortOrders = {}
-    this.columns.forEach(function (key) {
-      sortOrders[key] = 1
-    })
-    return {
-      sortKey: '',
-      sortOrders: sortOrders
-    }
-  },
-  computed: {
-    filteredData: function () {
-      var sortKey = this.sortKey
-      var filterKey = this.filterKey && this.filterKey.toLowerCase()
-      var order = this.sortOrders[sortKey] || 1
-      var data = this.data
-      if (filterKey) {
-        data = data.filter(function (row) {
-          return Object.keys(row).some(function (key) {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
-          })
-        })
-      }
-      if (sortKey) {
-        data = data.slice().sort(function (a, b) {
-          a = a[sortKey]
-          b = b[sortKey]
-          return (a === b ? 0 : a > b ? 1 : -1) * order
-        })
-      }
-      return data
-    }
-  },
-  filters: {
-    capitalize: function (str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
-    }
-  },
-  methods: {
-    sortBy: function (key) {
-      this.sortKey = key
-      this.sortOrders[key] = this.sortOrders[key] * -1
-    }
-  }
-})
+    // register the grid component
+    Vue.component('demo-grid', {
+        template: '#grid-template',
+        props: {
+            data: Array,
+            columns: Array,
+            filterKey: String
+        },
+        data: function () {
+            var sortOrders = {};
+            this.columns.forEach(function (key) {
+                sortOrders[key] = 1
+            });
+            return {
+                sortKey: '',
+                sortOrders: sortOrders
+            }
+        },
+        computed: {
+            filteredData: function () {
+                var sortKey = this.sortKey;
+                var filterKey = this.filterKey && this.filterKey.toLowerCase();
+                var order = this.sortOrders[sortKey] || 1;
+                var data = this.data;
+                if (filterKey) {
+                    data = data.filter(function (row) {
+                        return Object.keys(row).some(function (key) {
+                            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+                        })
+                    })
+                }
+                if (sortKey) {
+                    data = data.slice().sort(function (a, b) {
+                        a = a[sortKey];
+                        b = b[sortKey];
+                        return (a === b ? 0 : a > b ? 1 : -1) * order
+                    })
+                }
+                return data
+            }
+        },
+        filters: {
+            capitalize: function (str) {
+                return str.charAt(0).toUpperCase() + str.slice(1)
+            }
+        },
+        methods: {
+            sortBy: function (key) {
+                this.sortKey = key;
+                this.sortOrders[key] = this.sortOrders[key] * -1
+            }
+        }
+    });
 
-// bootstrap the demo
-var demo = new Vue({
-  el: '#demo',
-  data: {
-    searchQuery: '',
-    gridColumns: ['Amount', 'Owner', 'Participants', 'Market', 'Date'],
-    gridData: [
-      { Amount: 88.8, Owner: 'Me', Participants: "Me, You, John", Market: "Rewe", Date: '12.11.2017'},
-      { Amount: 78.8, Owner: 'You', Participants: "You, John", Market: "Lidl", Date: '11.11.2017'},
-      { Amount: 103.8, Owner: 'John', Participants: "John", Market: "Aldi", Date: '24.02.2017'},
-    ]
-  }
-});
-
+    // bootstrap the demo
+    var demo = new Vue({
+        el: '#demo',
+        data: {
+            searchQuery: '',
+            gridColumns: ['Amount', 'Owner', 'Participants', 'Market', 'Date'],
+            gridData: [
+                { Amount: 88.8, Owner: 'Me', Participants: "Me, You, John", Market: "Rewe", Date: '12.11.2017'},
+                { Amount: 78.8, Owner: 'You', Participants: "You, John", Market: "Lidl", Date: '11.11.2017'},
+                { Amount: 103.8, Owner: 'John', Participants: "John", Market: "Aldi", Date: '24.02.2017'},
+            ]
+        }
+    });
 
 </script>

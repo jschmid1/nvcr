@@ -1,6 +1,18 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.myclass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .level {
   padding: 0 20%;
-  margin-top: 15px;
+  margin: 15px 0 0 !important;
 }
 
 .columns {
@@ -69,8 +81,3 @@ th.active .arrow {
   border-top: 4px solid #fff;
 }
 
-.footer {
- bottom: 0;
- position: absolute;
- width: 100%;
-}

@@ -69,8 +69,8 @@
 
                         <ul class="members">
                             <li v-for="member in users">
-                                <input type="checkbox" :value="member.name" id="member.name" v-model="selected_members">
-                                <label for="thing" style='background-image: url({{ member.avatar }})'>{{ member.name }}</label>
+                                <input type="checkbox" value="{{ member.name }}" id="{{ member.name }}" v-model="selected_members">
+                                <label for="{{ member.name }}" style='background-image: url({{ member.avatar }})'>{{ member.name }}</label>
                             </li>
                         </ul>
                         {{ users | json }}

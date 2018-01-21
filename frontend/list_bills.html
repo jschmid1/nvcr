@@ -67,16 +67,14 @@
                         <p>date: {{ date }}</p>
                         <br>
 
-                        <label class='label'>
-                            <ul>
-                                <li v-for="member in flat_members">
-                                    <input type="checkbox" :value="member" id="member" v-model="selected_members">
-                                    <label>{{ member }}</label>
+                        <ul class="members">
+                            <li v-for="member in flat_members">
+                                <input type="checkbox" :value="member" id="member" v-model="selected_members">
+                                <label>{{ member }}</label>
+                            </li>
+                        </ul>
 
-                                </li>
-                            </ul>
-                            {{ selected_members }}
-                        </label>
+                        {{ selected_members }}
                         
                         <input type='checkbox' name='thing' value='valuable' id="thing"/>
                         <label for="thing" style='background-image: url(https://placeimg.com/200/200/any)'></label> 

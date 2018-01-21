@@ -80,4 +80,22 @@ th.active .arrow {
   border-right: 4px solid transparent;
   border-top: 4px solid #fff;
 }
-
+input[type=checkbox] {
+    display:none;
+}
+input[type=checkbox] + label {
+    filter: grayscale(100%);
+    height: 200px;
+    width: 200px;
+    display: inline-block;
+    padding: 0;
+    transition: transform 0.25s ease, -webkit-filter 0.5s ease;
+}
+input[type=checkbox]:checked + label {
+    filter: grayscale(0%);
+    transform: translateY(20px);
+    height: 200px;
+    width: 200px;
+    display: inline-block;
+    padding: 0;
+}

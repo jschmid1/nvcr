@@ -68,16 +68,12 @@
                         <br>
 
                         <ul class="members">
-                            <li v-for="member in flat_members">
-                                <input type="checkbox" :value="member" id="member" v-model="selected_members">
-                                <label>{{ member }}</label>
+                            <li v-for="member in users">
+                                <input type="checkbox" :value="member.name" id="member.name" v-model="selected_members">
+                                <label for="thing" style='background-image: url({{ member.avatar }})'>{{ member.name }}</label>
                             </li>
                         </ul>
-
-                        {{ selected_members }}
-                        
-                        <input type='checkbox' name='thing' value='valuable' id="thing"/>
-                        <label for="thing" style='background-image: url(https://placeimg.com/200/200/any)'></label> 
+                        {{ users | json }}
 
                         <div class="field">
                             <label class="label">Description</label>
@@ -185,7 +181,12 @@
             price: '',
             market_names: ['Aldi', 'Lidl'],
             selected_market: '',
-            flat_members: ['John', 'Jeff', 'Marv', 'Frank'],
+            users: [ 
+              { name: 'John', avatar: 'https://placeimg.com/75/75/arch' },
+              { name: 'Sepp', avatar: 'https://placeimg.com/75/75/people' },
+              { name: 'Mango', avatar: 'https://placeimg.com/75/75/nature' },
+              { name: 'Eis', avatar: 'https://placeimg.com/75/75/tech' }
+                ],
             selected_members: [],
             description: '',
             status: ''

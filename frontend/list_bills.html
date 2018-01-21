@@ -39,6 +39,7 @@
             <div class="level-right">
                 <div id='root'>
                     <modal v-if='showModal' @close='showModal = false'>
+                        <form>
 
                         <label class='label' for="price">Price</label>
                         <input class='input' v-model="price" placeholder="$$">
@@ -49,7 +50,7 @@
                         <div class="select">
                             <label class='label' for="market">Market</label>
                             <select v-model="selected_market">
-                                <option value="" disabled selected>Select your market</option>
+                                <option value="" disabled selected>Select market</option>
                                 <option v-for="market in market_names" v-bind:value="market">
                                     {{ market }}
                                 </option>
@@ -62,11 +63,6 @@
                         <br>
                         <br>
 
-                        <label class='label' for="date">Date</label>
-                        <input v-model='date' type="date" name="date">
-                        <p>date: {{ date }}</p>
-                        <br>
-
                         <ul class="members">
                             <li v-for="member in users">
                                 <input type="checkbox" :value="member.name" :id="member.name" v-model="selected_members">
@@ -74,12 +70,25 @@
                             </li>
                         </ul>
 
+                        <label class='label' for="date">Date</label>
+                        <input v-model='date' type="date" name="date">
+                        <br>
+
                         <div class="field">
                             <label class="label">Description</label>
                             <div class="control">
                                 <textarea v-model='description' class="textarea" placeholder="Dinner, Lunch.."></textarea>
                             </div>
                         </div>
+                        <div class="field is-grouped">
+                          <div class="control">
+                            <button class="button is-text" v-on:click="send_form" type="submit">Submit</button>
+                          </div>
+                          <div class="control">
+                            <button class="button is-text" @click="$emit('close')">Cancel</button>
+                          </div>
+                        </div>
+                        </form>
 
                     </modal>
                     <button class='button' @click='showModal = true'>Create</button>
@@ -154,14 +163,6 @@
           <div class='box'>
             <slot></slot>
         <footer class="modal-card-foot">
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-link" @click.prevent="$emit('close')" type="submit">Submit</button>
-          </div>
-          <div class="control">
-            <button class="button is-text" @click="$emit('close')">Cancel</button>
-          </div>
-        </div>
         </footer>
         </b>
         </div>
@@ -181,33 +182,25 @@
             market_names: ['Aldi', 'Lidl'],
             selected_market: '',
             users: [ 
-              { name: 'John', avatar: 'https://placeimg.com/75/75/arch' },
-              { name: 'Sepp', avatar: 'https://placeimg.com/75/75/people' },
-              { name: 'Mango', avatar: 'https://placeimg.com/75/75/nature' },
-              { name: 'Eis', avatar: 'https://placeimg.com/75/75/tech' }
+              { name: 'Alx', avatar: 'https://placeimg.com/75/75/arch' },
+              { name: 'Ptr', avatar: 'https://placeimg.com/75/75/people' },
+              { name: 'Anaj', avatar: 'https://placeimg.com/75/75/nature' },
+              { name: 'Joshu', avatar: 'https://placeimg.com/75/75/tech' }
                 ],
             selected_members: [],
             description: '',
             status: ''
-
         },
-        created: function () {
-            this.load_bills();
-        },
-        methods: {
-            load_bills: function () {
-                var vm = this;
-                this.form.status = 'Loading..';
-                axios.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')
-                    .then(function (response) {
-                        vm.form.status = response.data[0];
-                        console.log(response.data)
-                    })
-                    .catch(function (error) {
-                        vm.status = 'An error occured.' + error;
-                    });
-            }}
+      methods: {
+        send_form: function (event) {
+          // send post request to api when ready
+          event.preventDefault;
+          console.log(this.users)
+          alert('Hello ' + this.selected_members+ '!')
+        }
+          }
     });
+
 
     // register the grid component
     Vue.component('demo-grid', {
@@ -273,8 +266,22 @@
                 { Amount: 88.8, Owner: 'Me', Participants: "Me, You, John", Market: "Rewe", Date: '12.11.2017'},
                 { Amount: 78.8, Owner: 'You', Participants: "You, John", Market: "Lidl", Date: '11.11.2017'},
                 { Amount: 103.8, Owner: 'John', Participants: "John", Market: "Aldi", Date: '24.02.2017'},
-            ]
-        }
+            ],
+            status: ''
+        },
+        methods: {
+            load_bills: function () {
+                var vm = this;
+                this.status = 'Loading..';
+                axios.get('http://ron-swanson-quotes.herokuapp.com/v2/quotes')
+                    .then(function (response) {
+                        vm.form.status = response.data[0];
+                        console.log(response.data)
+                    })
+                    .catch(function (error) {
+                        vm.status = 'An error occured.' + error;
+                    });
+            }}
     });
 
 </script>

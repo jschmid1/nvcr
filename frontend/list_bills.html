@@ -312,15 +312,22 @@
             ],
             status: ''
         },
+        mounted() {
+            this.load_bills()
+        },
         methods: {
-            load_bills: function () {
+            load_bills() {
                 var vm = this;
                 this.status = 'Loading..';
                 axios.get('http://localhost:5000/api/bills')
                     .then(function (response) {
-                        Vue.set(vm, 'data.gridData', response.data.bills)
-                        console.log('reseponse:'+response.data.bills)
-                        console.log('initialized:'+this.data.bills)
+                        console.log('before the response')
+                        console.log(this.gridData)
+                        console.log('from the response')
+                        console.log(response.data.bills)
+                        this.gridData = response.data
+                        console.log('from the object')
+                        console.log(this.gridData)
                     })
                     .catch(function (error) {
                         vm.status = 'An error occured.' + error;

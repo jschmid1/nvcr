@@ -20,10 +20,9 @@ if not qr(Market).first():
     db.session.add(market1)
     db.session.add(market2)
 if not qr(Bill).first():
-    bill1 = Bill(amount=10.1, owner_id=user1.id, owner=user1, market=market2, participants=[user1, user2])
-    bill2 = Bill(amount=24.5, owner_id=user2.id, owner=user2, market=market1, participants=[user2, user1])
-    db.session.add(bill1)
-    db.session.add(bill2)
+    for i in range(1, 100):
+        bill1 = Bill(amount=10.1, owner_id=user1.id, owner=user1, market=market2, participants=[user1, user2])
+        db.session.add(bill1)
 
 db.session.commit()
 

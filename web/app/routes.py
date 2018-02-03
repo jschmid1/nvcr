@@ -122,6 +122,13 @@ def bills():
             pl.append(payload)
         return construct_response('success', 'bills', 200, payload={'bills': pl})
 
+@app.route('/api/user/<int:user_id>')
+def get_user(user_id):
+    # temp
+    user = User.query.first()
+    # Serialize with json -> see bzr
+    return construct_response('success', 'user-{}'.format(user.id), 200, payload={'user': user.name})
+
 @app.route('/')
 def hw():
     return 'hello_world'

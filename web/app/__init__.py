@@ -6,10 +6,12 @@ from config import Config
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
 
+template_dir = os.path.abspath('../frontend/plain/templates')
 Base = declarative_base()
-app = Flask(__name__)
+app = Flask(__name__, template_folder=template_dir)
 cors = CORS(app) 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config.from_object(Config)

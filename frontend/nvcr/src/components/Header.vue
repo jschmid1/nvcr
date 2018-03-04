@@ -1,24 +1,57 @@
 <template>
-  <div class="header">
-    <h1> Welcome {{ username }}</h1>
-  </div>
+    <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <router-link to="/" class="navbar-brand"> NVCR for {{ username }} </router-link>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <button class="btn btn-danger log" v-show="isLoggedIn()" @click="handleLogout()">Log out </button>
+        <button class="btn btn-info log" v-show="!isLoggedIn()" @click="handleLogin()">Log In</button>
+
+        <button type="button" class="btn btn-primary" @click="openModal()">Create Bill</button>
+        <modal v-if="showModal" @close="showModal = false">
+        </modal>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
 
 import axios from 'axios'
+import { isLoggedIn, login, logout } from '../auth';
+import Modal from './Modal'
 
 export default {
   name: 'header-component',
+  components: {
+    Modal,
+  },
+  methods: {
+    handleLogin() {
+      login();
+    },
+    handleLogout() {
+      logout();
+    },
+    isLoggedIn() {
+      return isLoggedIn();
+    },
+    openModal() {
+       this.showModal = true;
+    },
+  },
   data () {
     return {
       username: 'Anonymous',
-      errors: []
+      errors: [],
+      showModal: false,
+      logged_in: isLoggedIn()
     }
   },
   created () {
     // dynamic user id
-    axios.get(`http://localhost:5000/api/user/1`)
+    axios.get(`http://localhost:5000/api/users/1`)
       .then(response => {
         this.username = response.data.user
       })

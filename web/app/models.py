@@ -7,16 +7,15 @@ import jwt
 
 
 class User_Bill(db.Model):
-  __tablename__ = 'user_bill'
-  #id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
-  user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-  bill_id = Column(Integer, ForeignKey('bill.id'), primary_key=True)
+    __tablename__ = 'user_bill'
+    # id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+    bill_id = Column(Integer, ForeignKey('bill.id'), primary_key=True)
+    user = relationship("User", backref=backref("user_bill", cascade="all, delete-orphan"))
+    bill = relationship("Bill", backref=backref("user_bill", cascade="all, delete-orphan"))
 
-  user = relationship("User", backref=backref("user_bill", cascade="all, delete-orphan" ))
-  bill = relationship("Bill", backref=backref("user_bill", cascade="all, delete-orphan" ))
-
-  def __repr__(self):
-    return '<User_Bill {} - {}>'.format(self.user.name, self.bill.amount)
+    def __repr__(self):
+        return '<User_Bill {} - {}>'.format(self.user.name, self.bill.amount)
 
 
 class User(db.Model):
@@ -24,15 +23,14 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
+    balance = db.Column(db.Float, default=0.0)
     flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))
-    flat = db.relationship("Flat", back_populates="users")
+    flat = db.relationship("Flat", back_populates="members")
     bills = db.relationship("Bill", back_populates="owner")
     _password = db.Column(db.Binary(60), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     authenticated = db.Column(db.Boolean, default=False)
-
     bills_i_payed_for = relationship("Bill", secondary="user_bill")
-
 
     def __init__(self, plaintext_password=None, name=None, email=None, flat=None):
         self.name = name
@@ -96,7 +94,8 @@ class User(db.Model):
             return e
 
     def __repr__(self):
-        return '<User: {}>'.format(self.email)    
+        return '<User: {}>'.format(self.email)
+
 
 class Bill(db.Model):
     __tablename__ = 'bill'
@@ -106,20 +105,27 @@ class Bill(db.Model):
     market = db.relationship("Market", back_populates="bills")
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     owner = db.relationship("User", back_populates="bills")
-
     participants = relationship("User", secondary="user_bill")
 
+    def participant_names(self):
+        return [pp.name for pp in self.participants]
+
     def __repr__(self):
-        return '<Bill: {}>'.format(self.amount)    
+        return '<Bill: {}>'.format(self.amount)
+
 
 class Flat(db.Model):
     __tablename__ = 'flat'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
-    users = db.relationship("User", back_populates="flat")
+    members = db.relationship("User", back_populates="flat")
+
+    def member_names(self):
+        return [member.name for member in self.members]
 
     def __repr__(self):
-        return '<Flat: {}>'.format(self.name)    
+        return '<Flat: {}>'.format(self.name)
+
 
 class Market(db.Model):
     __tablename__ = 'market'
@@ -128,5 +134,4 @@ class Market(db.Model):
     bills = db.relationship("Bill", back_populates="market")
 
     def __repr__(self):
-        return '<Market: {}>'.format(self.name)    
-
+        return '<Market: {}>'.format(self.name)

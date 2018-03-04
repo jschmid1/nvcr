@@ -1,5 +1,5 @@
 <template>
-  <div id="people">
+  <div id="bills">
     <v-client-table :data="bills" :columns="columns" :options="options">
 
     </v-client-table>
@@ -61,11 +61,10 @@ th:nth-child(3) {
   text-align:center;
 }
 
-#people {
+#bills {
   text-align: center;
   width: 95%;
   margin: 0 auto;
 }
-
 
 </style>

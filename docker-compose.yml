@@ -32,6 +32,11 @@ data:
 postgres:
   restart: always
   image: postgres:latest
+  # env_file: .env
+  environment:
+    - POSTGRES_USER=docker
+    - POSTGRES_PASSWORD=docker
+    - POSTGRES_DB=nvcr
   volumes_from:
     - data
   ports:

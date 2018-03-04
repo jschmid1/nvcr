@@ -8,7 +8,7 @@ class Config(object):
             passwd = os.getenv('DB_PASS', 'docker'),
             host = os.getenv('DB_HOST', 'postgres'),
             port = os.getenv('DB_PORT', '5432'),
-            db = os.getenv('DB_NAME', 'docker')
+            db = os.getenv('DB_NAME', 'nvcr')
             )
     SECRET_KEY = os.getenv('SECRET_KEY', 'development')
     DEBUG = False

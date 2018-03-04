@@ -1,7 +1,6 @@
 <template>
   <div class="col-sm-4 col-sm-offset-4">
     <h2>Log In</h2>
-    <p>Log in to your account to get some great quotes.</p>
     <div class="alert alert-danger" v-if="error">
       <p>{{ error }}</p>
     </div>
@@ -28,6 +27,7 @@
 <script>
 
 import axios from 'axios'
+import { isLoggedIn, login, logout } from '../auth';
 
 export default {
   name: 'login-component',
@@ -36,7 +36,7 @@ export default {
       email: '',
       password: '',
       error: '',
-      logged_in: false
+      logged_in: isLoggedIn()
     }
   },
   methods: {
@@ -46,33 +46,17 @@ export default {
           password: this.password,
           email: this.email
       })
-
-      axios.post(`http://localhost:5000/api/login`, send_data, {
-          headers: {
-              'Content-Type': 'application/json',
-          }
-      }
-      ).then(function (response) {
-            console.log(response.data);
-            localStorage.token = response.data.auth_token
-            this.logged_in = true;
-      })
-      .catch(function (error) {
-        console.log('token: NOPE');
-        console.log(error);
-      })
-      // test login
-      axios.get('http://localhost:5000/api/secret', {
-        headers: {'Authorization': 'Token ' + localStorage.token }
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log('token: ' + this.token);
-        console.log(error);
-      });
-    }
+      login(send_data)
+    },
+    handleLogin() {
+      login();
+    },
+    handleLogout() {
+      logout();
+    },
+    isLoggedIn() {
+      return isLoggedIn();
+    },
   }
 
 }

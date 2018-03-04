@@ -10,8 +10,10 @@ if not qr(Flat).first():
     flat = Flat(name='test')
     db.session.add(flat)
 if not qr(User).first():
-    user1 = User(name='John', email='test@test.com', flat=flat, plaintext_password='test')
-    user2 = User(name='Adl', email='adl@test.com', flat=flat, plaintext_password='test')
+    user1 = User(name='John', email='test@test.com', plaintext_password='test')
+    user2 = User(name='Adl', email='adl@test.com', plaintext_password='test')
+    user1.flat = flat
+    user2.flat = flat
     db.session.add(user1)
     db.session.add(user2)
 if not qr(Market).first():

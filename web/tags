@@ -1,0 +1,137 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Base	app/__init__.py	/^Base = declarative_base()$/;"	v
+Bill	app/models.py	/^class Bill(db.Model):$/;"	c
+CSRF_ENABLED	config.py	/^    CSRF_ENABLED = True$/;"	v	class:Config
+Config	config.py	/^class Config(object):$/;"	c
+DEBUG	config.py	/^    DEBUG = False$/;"	v	class:Config
+DEBUG	config.py	/^    DEBUG = False$/;"	v	class:ProductionConfig
+DEBUG	config.py	/^    DEBUG = True$/;"	v	class:DevelopmentConfig
+DEBUG	config.py	/^    DEBUG = True$/;"	v	class:StagingConfig
+DEVELOPMENT	config.py	/^    DEVELOPMENT = True$/;"	v	class:DevelopmentConfig
+DEVELOPMENT	config.py	/^    DEVELOPMENT = True$/;"	v	class:StagingConfig
+DevelopmentConfig	config.py	/^class DevelopmentConfig(Config):$/;"	c
+Flat	app/models.py	/^class Flat(db.Model):$/;"	c
+Market	app/models.py	/^class Market(db.Model):$/;"	c
+ModelNotFound	app/routes.py	/^class ModelNotFound(Exception):$/;"	c
+ProductionConfig	config.py	/^class ProductionConfig(Config):$/;"	c
+SECRET_KEY	config.py	/^    SECRET_KEY = os.getenv('SECRET_KEY', 'development')$/;"	v	class:Config
+SQLALCHEMY_DATABASE_URI	config.py	/^    SQLALCHEMY_DATABASE_URI = 'postgresql:\/\/{user}:{passwd}@{host}:{port}\/{db}'.format($/;"	v	class:Config
+SQLALCHEMY_TRACK_MODIFICATIONS	config.py	/^    SQLALCHEMY_TRACK_MODIFICATIONS = False$/;"	v	class:Config
+StagingConfig	config.py	/^class StagingConfig(Config):$/;"	c
+TESTING	config.py	/^    TESTING = False$/;"	v	class:Config
+TESTING	config.py	/^    TESTING = True$/;"	v	class:TestingConfig
+TestingConfig	config.py	/^class TestingConfig(Config):$/;"	c
+User	app/models.py	/^class User(db.Model):$/;"	c
+User_Bill	app/models.py	/^class User_Bill(db.Model):$/;"	c
+__init__	app/models.py	/^    def __init__(self, plaintext_password=None, name=None, email=None, flat=None):$/;"	m	class:User
+__repr__	app/models.py	/^    def __repr__(self):$/;"	m	class:Bill	file:
+__repr__	app/models.py	/^    def __repr__(self):$/;"	m	class:Flat	file:
+__repr__	app/models.py	/^    def __repr__(self):$/;"	m	class:Market	file:
+__repr__	app/models.py	/^    def __repr__(self):$/;"	m	class:User	file:
+__repr__	app/models.py	/^    def __repr__(self):$/;"	m	class:User_Bill	file:
+__tablename__	app/models.py	/^    __tablename__ = 'bill'$/;"	v	class:Bill
+__tablename__	app/models.py	/^    __tablename__ = 'flat'$/;"	v	class:Flat
+__tablename__	app/models.py	/^    __tablename__ = 'market'$/;"	v	class:Market
+__tablename__	app/models.py	/^    __tablename__ = 'user'$/;"	v	class:User
+__tablename__	app/models.py	/^    __tablename__ = 'user_bill'$/;"	v	class:User_Bill
+_password	app/models.py	/^    _password = db.Column(db.Binary(60), nullable=False)$/;"	v	class:User
+amount	app/models.py	/^    amount = db.Column(db.Float)$/;"	v	class:Bill
+app	app/__init__.py	/^app = Flask(__name__, template_folder=template_dir)$/;"	v
+authenticated	app/models.py	/^    authenticated = db.Column(db.Boolean, default=False)$/;"	v	class:User
+balance	app/models.py	/^    balance = db.Column(db.Float, default=0.0)$/;"	v	class:User
+basedir	config.py	/^basedir = os.path.abspath(os.path.dirname(__file__))$/;"	v
+bcrypt	app/__init__.py	/^bcrypt = Bcrypt(app)$/;"	v
+bill	app/models.py	/^    bill = relationship("Bill", backref=backref("user_bill", cascade="all, delete-orphan"))$/;"	v	class:User_Bill
+bill1	create_db.py	/^        bill1 = Bill(amount=10.1, owner_id=user1.id, owner=user1, market=market2, participants=[user1, user2])$/;"	v
+bill_id	app/models.py	/^    bill_id = Column(Integer, ForeignKey('bill.id'), primary_key=True)$/;"	v	class:User_Bill
+bills	app/models.py	/^    bills = db.relationship("Bill", back_populates="market")$/;"	v	class:Market
+bills	app/models.py	/^    bills = db.relationship("Bill", back_populates="owner")$/;"	v	class:User
+bills	app/routes.py	/^def bills():$/;"	f
+bills_i_payed_for	app/models.py	/^    bills_i_payed_for = relationship("Bill", secondary="user_bill")$/;"	v	class:User
+branch_labels	migrations/versions/9ef32a11645a_.py	/^branch_labels = None$/;"	v
+branch_labels	migrations/versions/e13d5277b7d8_.py	/^branch_labels = None$/;"	v
+calc_share	app/routes.py	/^def calc_share(current_user, bill_owner, market, amount, participants):$/;"	f
+config	migrations/env.py	/^config = context.config$/;"	v
+construct_response	app/routes.py	/^def construct_response(status, message, ret_code=200, payload={}):$/;"	f
+cors	app/__init__.py	/^cors = CORS(app) $/;"	v
+cors	app/__init__.py	/^cors = CORS(app, resources={r"\/api\/*": {"origins": "*"}})$/;"	v
+db	app/__init__.py	/^db = SQLAlchemy(app)$/;"	v
+db	config.py	/^            db = os.getenv('DB_NAME', 'nvcr')$/;"	v	class:Config
+decode_auth_token	app/models.py	/^    def decode_auth_token(auth_token):$/;"	m	class:User
+decorated_function	app/routes.py	/^    def decorated_function(*args, **kwargs):$/;"	f	function:login_required
+depends_on	migrations/versions/9ef32a11645a_.py	/^depends_on = None$/;"	v
+depends_on	migrations/versions/e13d5277b7d8_.py	/^depends_on = None$/;"	v
+down_revision	migrations/versions/9ef32a11645a_.py	/^down_revision = 'e13d5277b7d8'$/;"	v
+down_revision	migrations/versions/e13d5277b7d8_.py	/^down_revision = None$/;"	v
+downgrade	migrations/versions/9ef32a11645a_.py	/^def downgrade():$/;"	f
+downgrade	migrations/versions/e13d5277b7d8_.py	/^def downgrade():$/;"	f
+email	app/models.py	/^    email = db.Column(db.String(120), index=True, unique=True)$/;"	v	class:User
+encode_auth_token	app/models.py	/^    def encode_auth_token(self, user_id):$/;"	m	class:User
+flat	app/models.py	/^    flat = db.relationship("Flat", back_populates="members")$/;"	v	class:User
+flat	create_db.py	/^    flat = Flat(name='test')$/;"	v
+flat_id	app/models.py	/^    flat_id = db.Column(db.Integer, db.ForeignKey('flat.id'))$/;"	v	class:User
+get_id	app/models.py	/^    def get_id(self):$/;"	m	class:User
+hash_pw	app/models.py	/^    def hash_pw(self, plaintext_password):$/;"	m	class:User
+host	config.py	/^            host = os.getenv('DB_HOST', 'postgres'),$/;"	v	class:Config
+hw	app/routes.py	/^def hw():$/;"	f
+id	app/models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	v	class:Bill
+id	app/models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	v	class:Flat
+id	app/models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	v	class:Market
+id	app/models.py	/^    id = db.Column(db.Integer, primary_key=True)$/;"	v	class:User
+is_active	app/models.py	/^    def is_active(self):$/;"	m	class:User
+is_anonymous	app/models.py	/^    def is_anonymous(self):$/;"	m	class:User
+is_authenticated	app/models.py	/^    def is_authenticated(self):$/;"	m	class:User
+logger	migrations/env.py	/^logger = logging.getLogger('alembic.env')$/;"	v
+login	app/routes.py	/^def login():$/;"	f
+login_required	app/routes.py	/^def login_required(f):$/;"	f
+logout	app/routes.py	/^def logout():$/;"	f
+make_shell_context	nvcr.py	/^def make_shell_context():$/;"	f
+market	app/models.py	/^    market = db.relationship("Market", back_populates="bills")$/;"	v	class:Bill
+market1	create_db.py	/^    market1 = Market(name='Lidl')$/;"	v
+market2	create_db.py	/^    market2 = Market(name='Aldi')$/;"	v
+market_id	app/models.py	/^    market_id = db.Column(db.Integer, db.ForeignKey('market.id'))$/;"	v	class:Bill
+markets	app/routes.py	/^def markets():$/;"	f
+member_names	app/models.py	/^    def member_names(self):$/;"	m	class:Flat
+members	app/models.py	/^    members = db.relationship("User", back_populates="flat")$/;"	v	class:Flat
+migrate	app/__init__.py	/^migrate = Migrate(app, db)$/;"	v
+name	app/models.py	/^    name = db.Column(db.String(64), index=True, unique=True)$/;"	v	class:Flat
+name	app/models.py	/^    name = db.Column(db.String(64), index=True, unique=True)$/;"	v	class:User
+name	app/models.py	/^    name = db.Column(db.String)$/;"	v	class:Market
+new_bill	app/routes.py	/^def new_bill():$/;"	f
+owner	app/models.py	/^    owner = db.relationship("User", back_populates="bills")$/;"	v	class:Bill
+owner_id	app/models.py	/^    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))$/;"	v	class:Bill
+participant_names	app/models.py	/^    def participant_names(self):$/;"	m	class:Bill
+participants	app/models.py	/^    participants = relationship("User", secondary="user_bill")$/;"	v	class:Bill
+passwd	config.py	/^            passwd = os.getenv('DB_PASS', 'docker'),$/;"	v	class:Config
+password	app/models.py	/^    def password(self):$/;"	m	class:User
+port	config.py	/^            port = os.getenv('DB_PORT', '5432'),$/;"	v	class:Config
+process_revision_directives	migrations/env.py	/^    def process_revision_directives(context, revision, directives):$/;"	f	function:run_migrations_online
+qr	create_db.py	/^qr = db.session.query$/;"	v
+query_for_id	app/routes.py	/^def query_for_id(model, value):$/;"	f
+query_for_name	app/routes.py	/^def query_for_name(model, value):$/;"	f
+register	app/routes.py	/^def register():$/;"	f
+registered_on	app/models.py	/^    registered_on = db.Column(db.DateTime, nullable=False)$/;"	v	class:User
+revision	migrations/versions/9ef32a11645a_.py	/^revision = '9ef32a11645a'$/;"	v
+revision	migrations/versions/e13d5277b7d8_.py	/^revision = 'e13d5277b7d8'$/;"	v
+run_migrations_offline	migrations/env.py	/^def run_migrations_offline():$/;"	f
+run_migrations_online	migrations/env.py	/^def run_migrations_online():$/;"	f
+secret	app/routes.py	/^def secret():$/;"	f
+show_bill	app/routes.py	/^def show_bill(bill_id):$/;"	f
+show_flat	app/routes.py	/^def show_flat(flat_id):$/;"	f
+show_market	app/routes.py	/^def show_market(market_id):$/;"	f
+show_user	app/routes.py	/^def show_user(user_id):$/;"	f
+target_metadata	migrations/env.py	/^target_metadata = current_app.extensions['migrate'].db.metadata$/;"	v
+template_dir	app/__init__.py	/^template_dir = os.path.abspath('..\/frontend\/plain\/templates')$/;"	v
+upgrade	migrations/versions/9ef32a11645a_.py	/^def upgrade():$/;"	f
+upgrade	migrations/versions/e13d5277b7d8_.py	/^def upgrade():$/;"	f
+user	app/models.py	/^    user = relationship("User", backref=backref("user_bill", cascade="all, delete-orphan"))$/;"	v	class:User_Bill
+user	config.py	/^            user = os.getenv('DB_USER', 'docker'),$/;"	v	class:Config
+user1	create_db.py	/^    user1 = User(name='John', email='test@test.com', plaintext_password='test')$/;"	v
+user2	create_db.py	/^    user2 = User(name='Adl', email='adl@test.com', plaintext_password='test')$/;"	v
+user_id	app/models.py	/^    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)$/;"	v	class:User_Bill
+users	app/routes.py	/^def users():$/;"	f
